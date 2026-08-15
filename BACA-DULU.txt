@@ -1,0 +1,390 @@
+DONAT GENDUY — VERSI APP MANDIRI
+====================================================================
+
+Nama app di dalam sudah diganti dari "Kasir Donat Genduy" jadi
+"Donat Genduy" saja (judul, logo header, struk, share text, PWA/
+Add to Home Screen). Bagian-bagian di dalam app tetap punya nama
+sendiri sesuai fungsinya masing-masing (tab "Kasir", "Online",
+"Riwayat", "Laporan", "Bahan", "Produksi", "Kas", "Menu").
+
+Paket ini isinya:
+- index.html        -> halaman utama app
+- app.compiled.js   -> logika & tampilan kasir (siap pakai)
+- app.jsx           -> source code asli (buat referensi/edit lanjutan)
+- manifest.json     -> supaya bisa "Install" jadi app beneran
+- sw.js             -> service worker (biar bisa dibuka offline)
+- icon-*.png        -> ikon app (logo Donat Genduy)
+
+====================================================================
+FITUR BARU DI VERSI INI (rilis paling baru)
+====================================================================
+
+P) PERBAIKAN BUG — TAB LAPORAN SEMPAT ERROR
+   Versi sebelumnya ada bug di tab Laporan (ada 2 variabel yang
+   kepakai sebelum sempat diisi nilainya) yang bikin tab Laporan gak
+   kebuka / error. Sudah diperbaiki di versi ini.
+
+Q) ADONAN SISA & ADONAN TAMBAHAN ("SPANDOUGH")
+   Di dunia nyata, adonan yang dicampur gak selalu abis persis jadi
+   donat — selalu ada sisa. Sekarang app ngerti soal ini:
+
+   - Tab Menu > Produksi sekarang punya kartu "Sisa Adonan Sekarang
+     (Spandough)" dalam satuan gram, selalu kelihatan di atas.
+   - Waktu "Catat Produksi Baru", ada field baru "Spandough Masuk —
+     Adonan Baru Dicampur (gram)": isi ini kalau kamu abis campur
+     adonan baru dari bahan baku. Bahan baku (tepung, telur, dst)
+     otomatis kepotong sesuai berat gram ini.
+   - Field "Potong Jadi Donat Maxi/Mini (pcs)" tetap ada seperti
+     biasa — tapi sekarang dihitung dari GABUNGAN sisa adonan yang
+     sudah ada + adonan baru yang kamu masukkan. Jadi kalau kemarin
+     masih ada sisa adonan, hari ini bisa langsung potong jadi donat
+     TANPA perlu campur adonan baru / tanpa motong bahan baku lagi.
+   - Sisa yang belum sempat dipotong jadi donat otomatis kesimpen
+     lagi sebagai "Sisa Adonan" buat dipakai di produksi berikutnya.
+   - HPP (harga pokok) tiap donat DIHITUNG PER PCS YANG BENERAN JADI
+     DONAT SAJA — adonan yang masih jadi sisa belum dianggap biaya
+     donat sampai dia beneran dipotong jadi pcs. Jadi laporan untung/
+     rugi kamu gak "kebebanan" biaya buat adonan yang belum jadi apa-
+     apa.
+   - Riwayat Produksi sekarang nampilin juga berapa gram Spandough
+     Masuk & berapa gram Sisa Adonan setelah produksi itu.
+   - Di Menu > Produksi > Atur Resep Produksi, sekarang ada info
+     "Total Berat Adonan" (dijumlah otomatis dari bahan-bahan
+     bersatuan gram/ml/kg/liter di resep) biar kelihatan cocok apa
+     nggak sama berat adonan asli kamu — dan field "Target Berat
+     Adonan per Pcs" (default Maxi 33gr, Mini 16gr, bisa diubah)
+     yang dipakai buat ngitung berapa gram adonan kepotong tiap kali
+     produksi donat.
+   - Tab Menu > Reset Data: opsi "Stok Donat Plain Maxi & Mini" sudah
+     diperbarui supaya ikut ngosongin Sisa Adonan juga.
+
+====================================================================
+FITUR SEBELUMNYA
+====================================================================
+
+N) DATA RESEP & BAHAN BAKU ASLI SUDAH DIMASUKKAN (dari spreadsheet HPP)
+   Bahan baku, resep produksi, dan 25 varian rasa dari file HPP
+   "Hpp genduy agust12.2" sudah dimasukkan jadi data default app:
+
+   - Tab "Bahan": 38 bahan baku (bahan adonan: premix, tepung cakra,
+     telur, susu UHT, ragi, margarin, kertas nasi, minyak goreng,
+     air+es — dan bahan topping: coklat blok, white blok, butter
+     cream, cheese, oreo, almond, strawberry jam, dan seterusnya),
+     masing-masing SUDAH ada harga per satuannya (diambil dari harga
+     kemasan ÷ berat kemasan di spreadsheet kamu). Field harga bahan
+     ini baru: sekarang tiap bahan baku bisa diisi harga per satuan,
+     dipakai buat hitung HPP & untung otomatis (lihat poin O).
+
+   - Tab Menu > "Produksi" > Atur Resep Produksi: resep adonan per
+     pcs donat Maxi & Mini sudah diisi (dihitung dari data produksi
+     1x batch 208 pcs @ 33gr di sheet "Hpp Produksi" kamu, dibagi
+     per pcs, dan untuk Mini di-skalakan ke 16gr).
+
+   - Tab Menu > "Varian Rasa": 25 rasa dari sheet "Rekap Toping"
+     kamu sudah dimasukkan lengkap dengan resep gramasi topping per
+     pcs Maxi & Mini (Blackforest, Cheese Buttercream, Bomboloni
+     Choco, Tiramisu, Cookies White Choco, Rainbow Strawberry, White
+     Regal, Redvelvet Marsha, dan seterusnya), plus harga jual per
+     pcs (offline & online) mengikuti tabel "Harga Donat/Pcs" kamu.
+
+   - Tab Menu > "Paket": 8 paket sudah dimasukkan (Jadul Maxi Isi 3,
+     4 Pcs Maxi, 1 Lusin Maxi, 1/2 Lusin Maxi, Jadul Mini Isi 5,
+     4 Pcs Mini, 1 Lusin Mini, 1 Lusin Mini Ucapan).
+
+   PENTING — SEMUA INI BISA DIUBAH KAPAN SAJA:
+   Karena datanya ditranskrip dari foto spreadsheet, ada kemungkinan
+   kecil salah baca angka di beberapa sel yang kurang jelas/rusak di
+   foto. Tolong dicek ulang terutama harga bahan (tab Bahan), resep
+   gramasi tiap rasa (Menu > Varian Rasa, tinggal pencet ikon pensil
+   buat edit), dan resep produksi adonan (Menu > Produksi > Atur
+   Resep Produksi). Semuanya form biasa yang gampang diubah — bukan
+   kode yang perlu di-compile ulang.
+
+O) HITUNG HPP & UNTUNG OTOMATIS PER RASA — TERINTEGRASI KE LAPORAN
+   Sekarang tiap bahan baku (tab Bahan) punya field "Harga per
+   Satuan". Dari situ, app otomatis menghitung:
+
+   - Di Menu > Varian Rasa: tiap kartu rasa sekarang menampilkan HPP
+     (harga pokok produksi, dihitung dari resep bahan x harga bahan,
+     ditambah biaya adonan per pcs dari Resep Produksi) VS untung
+     bersihnya untuk Maxi & Mini, real-time begitu kamu ubah harga
+     jual atau resep. Kalau untungnya minus, kotaknya otomatis
+     berwarna merah — jadi kelihatan kalau harga jual kurang tinggi.
+
+   - Di tab Laporan (Harian/Bulanan): sekarang ada 2 kartu baru,
+     "HPP Bahan Terpakai (resep)" dan "Estimasi Laba Kotor" — dihitung
+     otomatis dari total bahan baku yang benar-benar keluar (dari
+     penjualan + produksi) dikali harga masing-masing bahan. Ini
+     terpisah dari "Laba Bersih" yang sudah ada sebelumnya (yang
+     pakai catatan Pengeluaran manual di tab Kas), supaya nggak
+     dobel hitung kalau kamu juga sudah catat belanja bahan di Kas.
+     Laporan .doc yang di-share juga sudah memuat info ini.
+
+====================================================================
+FITUR SEBELUM ITU
+====================================================================
+
+L) TAB "PRODUKSI" — BAHAN BAKU PRODUKSI KELUAR/MASUK OTOMATIS
+   Tab baru khusus buat proses produksi donat (bikin adonan jadi
+   donat plain), terpisah dari tab "Bahan" yang isinya bahan
+   pendukung topping/rasa.
+
+   Cara pakainya:
+   1. Pencet ikon pengaturan (di kanan atas tab Produksi) -> "Atur
+      Resep Produksi" -> pilih bahan baku apa saja & berapa jumlah
+      yang dipakai untuk MENGHASILKAN 1 pcs donat plain Maxi, dan
+      terpisah untuk 1 pcs donat plain Mini. Bahan bakunya sama
+      dengan yang ada di tab "Bahan" (tepung, ragi, minyak, gula,
+      dll — tambahkan dulu di tab Bahan kalau belum ada).
+   2. Pencet "Catat Produksi Baru" -> isi berapa pcs donat Maxi &
+      berapa pcs donat Mini yang dihasilkan produksi kali itu (bebas,
+      sesuai hasil produksi kalian sendiri, tidak dibatasi resep).
+   3. App otomatis menghitung total bahan baku yang akan terpakai
+      (resep x jumlah donat), menampilkan preview-nya dulu (dengan
+      tanda kalau ada bahan yang stoknya kurang), lalu begitu
+      disimpan: stok bahan baku otomatis berkurang, dan stok donat
+      plain Maxi/Mini otomatis bertambah sesuai jumlah hasil produksi.
+   4. Semua tercatat rapi dengan tanggal & jam di "Riwayat Produksi"
+      di tab yang sama, termasuk rincian bahan apa saja yang terpakai
+      di produksi itu.
+
+   Riwayat produksi ini juga otomatis masuk ke Laporan Harian &
+   Bulanan (lihat poin M di bawah), dan ke tab Menu -> Reset Data
+   (bisa dihapus terpisah dari data lain kalau lagi uji coba) serta
+   ke Backup Data / Sinkronisasi Cloud seperti data lainnya.
+
+M) LAPORAN — AKTIVITAS PRODUKSI (HARIAN & BULANAN)
+   Di tab Laporan, baik untuk "Hari Ini", "Pilih Tanggal", maupun
+   "Bulan Ini", sekarang ada kartu baru "Aktivitas Produksi Periode
+   Ini" yang menampilkan:
+   - Berapa kali produksi dilakukan pada periode itu
+   - Total pcs donat Maxi yang dihasilkan
+   - Total pcs donat Mini yang dihasilkan
+   - Daftar tanggal-tanggal produksi dilakukan
+   File laporan .doc yang di-share/diunduh (tombol "Laporan Harian"/
+   "Laporan Bulanan") juga sudah memuat tabel "Aktivitas Produksi"
+   yang sama, lengkap dengan waktu tiap produksi & hasilnya.
+
+====================================================================
+FITUR SEBELUM ITU
+====================================================================
+
+A) TAB "ONLINE" — PESANAN GOFOOD / GRABFOOD / SHOPEEFOOD
+   Karena app ini jalan di HP/browser (bukan server yang nyala 24
+   jam), TIDAK ADA webhook otomatis yang bisa langsung nangkep
+   pesanan dari GoFood/GrabFood/ShopeeFood. Sebagai gantinya, begitu
+   notifikasi order masuk di aplikasi mitra punya kalian, catat
+   manual di tab "Online": pilih donat & jumlahnya (persis kayak di
+   tab Kasir), lalu isi platform, ID pesanan, harga kotor, dan
+   persenan komisi platform — pendapatan bersih dihitung otomatis.
+   Stok donat & bahan baku otomatis ikut berkurang, dan pesanan bisa
+   dibatalkan (stok balik lagi) kalau ternyata salah catat/dibatalkan
+   pihak platform.
+
+B) TAB "KAS" — PENGELUARAN HARIAN TOKO
+   Catat pengeluaran dadakan/harian: beli bahan baku, es batu,
+   plastik/dus, gas, operasional, dll. Ada kategori, nominal,
+   deskripsi, dan sumber dana (Kasir/Owner). Bisa difilter per hari,
+   per bulan, atau semua, dan dihapus kalau salah catat.
+
+C) TAB "LAPORAN" — RINGKASAN KEUANGAN & LABA BERSIH
+   Ada kartu baru di atas tab Laporan yang menghitung otomatis:
+   - Omzet Kotor (penjualan Kasir offline + pesanan Online)
+   - Pendapatan Bersih Online (sudah dipotong komisi platform)
+   - Total Pengeluaran Toko (dari tab Kas)
+   - LABA BERSIH = (Penjualan Offline + Pendapatan Bersih Online)
+     − Total Pengeluaran
+   - Ringkasan sisa stok donat Maxi & Mini
+
+D) METODE PEMBAYARAN TUNAI / QRIS DI KASIR
+   Waktu checkout di tab Kasir, sekarang ada pilihan metode
+   pembayaran Tunai atau QRIS. Kalau pilih QRIS, tidak perlu isi
+   uang diterima/kembalian (dianggap dibayar pas), dan metodenya
+   ikut tercatat di riwayat & struk.
+
+Semua data baru ini (pesanan online, pengeluaran) ikut tersimpan di
+HP dan ikut ke-sync ke cloud (kalau sudah login Google), sama seperti
+data transaksi & stok yang lama.
+
+====================================================================
+UPDATE TERBARU (setelah rilis fitur Online/Kas)
+====================================================================
+
+E) LAPORAN — PEMAKAIAN BAHAN BAKU & AKTIVITAS STOK
+   Di tab Laporan (harian, per tanggal, maupun bulanan) sekarang ada
+   kartu "Aktivitas Stok Periode Ini" yang otomatis menghitung:
+   - Berapa kali stok donat ditambah (dan totalnya berapa pcs)
+   - Berapa kali stok bahan baku ditambah (dan berapa jenis bahan)
+   - Daftar bahan baku yang terpakai untuk penjualan periode itu,
+     lengkap sama berat/jumlahnya (gram, pcs, dll) — otomatis
+     dikurangi lagi kalau ada order yang dibatalkan
+   - Daftar bahan baku yang ditambah (restock) beserta jumlahnya
+
+F) HARGA DONAT OFFLINE & ONLINE BISA BEDA
+   Di Menu -> Rasa, sekarang ada 2 kolom harga per rasa: harga
+   offline (buat tab Kasir) dan harga online (buat tab Online).
+   Begitu juga di Menu -> Paket, ada harga offline & harga online
+   terpisah. Kalau harga online belum diisi, otomatis dipakai harga
+   offline. Tab Online otomatis pakai harga online ini waktu milih
+   donat/paket, jadi hitungan gross-nya lebih akurat sejak awal
+   (tetap bisa diedit manual kalau perlu).
+
+G) TAB KAS — MODAL USAHA & KATEGORI PENGELUARAN BEBAS
+   Ada kartu "Modal Usaha" di atas tab Kas yang bisa diatur bebas
+   kapan saja (tombol "Atur Modal") — cocok dipakai buat nyatet
+   modal awal atau nambah modal baru. Laporan Kas juga otomatis
+   ngitung "Sisa Modal" (Modal − Total Pengeluaran periode ini).
+   Kolom kategori waktu catat pengeluaran sekarang bebas diisi
+   sendiri (tidak dropdown tetap lagi) — tinggal ketik nama
+   kategorinya, dan nanti muncul juga sebagai saran otomatis kalau
+   sudah pernah dipakai sebelumnya.
+
+====================================================================
+UPDATE TERBARU LAGI (Kasir 2 opsi, laporan per channel, transfer)
+====================================================================
+
+H) TAB KASIR SEKARANG PUNYA 2 OPSI: OFFLINE / ONLINE
+   Sekarang tab "Kasir" dan "Online" digabung jadi satu, tinggal
+   pencet toggle di atas: "Kasir Offline" atau "Pesanan Online".
+   Rasa & paket yang muncul otomatis pakai harga sesuai channel yang
+   dipilih (harga offline waktu mode Kasir Offline, harga online
+   waktu mode Pesanan Online) — jadi jelas kelihatan dua opsi harga
+   yang beda buat jualan di toko vs di aplikasi ojol.
+
+I) METODE PEMBAYARAN OFFLINE SEKARANG ADA 3: TUNAI / QRIS / TRANSFER
+   Nambah opsi "Transfer" di checkout Kasir Offline (selain Tunai &
+   QRIS). Sama kayak QRIS, kalau pilih Transfer dianggap dibayar pas
+   tanpa perlu isi kembalian.
+
+J) LAPORAN — PENDAPATAN DIPISAH PER CHANNEL, BUKAN DIGABUNG
+   Di tab Laporan (dan di file Laporan Harian/Bulanan yang di-share),
+   sekarang ada tabel "Pendapatan per Channel" yang misahin omzet
+   jadi: Tunai (Offline), QRIS (Offline), Transfer (Offline), GoFood,
+   GrabFood, ShopeeFood — masing-masing kelihatan sendiri-sendiri,
+   ga digabung jadi satu angka lagi.
+
+K) FILE LAPORAN HARIAN/BULANAN (YANG DI-SHARE/DIUNDUH) DIPERBARUI
+   File .doc yang dihasilkan tombol "Laporan Harian"/"Laporan
+   Bulanan" sekarang ikut memuat: Pendapatan per Channel, Bahan Baku
+   Terpakai (lengkap berat/pcs-nya), Penambahan Stok Donat Plain
+   (berapa kali & totalnya), Penambahan Stok Bahan Baku (berapa kali
+   & totalnya per bahan), dan Detail Transaksi gabungan Kasir Offline
+   + Pesanan Online lengkap dengan tanggal, jam, dan channel-nya.
+
+====================================================================
+FITUR SEBELUM ITU
+====================================================================
+
+1) SINKRONISASI CLOUD PAKAI AKUN GOOGLE (SUDAH OTOMATIS, TANPA SETUP)
+   Sekarang ada tab Menu -> Sinkronisasi. Data (stok, transaksi,
+   laporan) otomatis sinkron ke semua HP/PC yang login pakai akun
+   Google yang sama.
+
+   Config Firebase sudah ditanam langsung di dalam app ini (punya
+   project Firebase "kasir-donat-genduy" punya sendiri). Jadi TIDAK
+   perlu tempel config apa pun lagi. Tinggal:
+   a. Buka app Kasir Donat Genduy -> Menu -> Sinkronisasi
+   b. Pencet "Masuk dengan Google"
+
+   Setelah login Google di satu device, login pakai akun yang SAMA
+   di device lain (setelah install ulang app-nya) -> data otomatis
+   muncul sama persis, dan perubahan baru langsung ke-sync real-time
+   ke semua device yang sedang login.
+
+   Kalau mau ganti/pakai project Firebase lain suatu saat nanti,
+   tinggal edit nilai "DEFAULT_FIREBASE_CONFIG" di dekat awal file
+   app.jsx, lalu compile ulang jadi app.compiled.js.
+
+2) STRUK LEBIH TEBAL & BESAR
+   Font di struk (baik yang di layar maupun yang diunduh/dicetak)
+   sekarang lebih besar dan tebal, supaya tetap kebaca jelas pas
+   dicetak di printer thermal/struk yang kecil.
+
+3) BAGIKAN LAPORAN HARIAN & BULANAN
+   Di tab Laporan, ada 2 tombol baru: "Laporan Harian" dan
+   "Laporan Bulanan". Pencet salah satu -> otomatis kebuat file
+   laporan (.doc) yang bisa dibuka di WPS Office / Microsoft Word,
+   isinya rekap pendapatan, rasa terlaris, dan detail transaksi.
+   Kalau HP-nya support, langsung muncul menu share (WA, email,
+   dll); kalau tidak, file-nya otomatis kedownload.
+
+4) QR CODE
+   Ada file terpisah "QR-Kasir-Donat-Genduy.html" — buka file itu
+   di browser buat lihat/screenshot QR code-nya, tinggal di-scan
+   dari HP lain buat langsung buka link app-nya.
+
+====================================================================
+LANGKAH HOSTING (kalau upload ulang / pertama kali)
+====================================================================
+1. Buka project di Netlify (app.netlify.com)
+2. Upload/drag folder atau zip ini ke area
+   "Drag and drop your project folder here to deploy new changes"
+3. Tunggu proses deploy selesai
+
+====================================================================
+INSTALL DI HP / PC
+====================================================================
+Android (Chrome): titik tiga (⋮) -> "Install app" / "Add to Home screen"
+iPhone (Safari):  tombol Share -> "Add to Home Screen"
+PC (Chrome/Edge): ikon Install di address bar
+
+====================================================================
+KALAU MAU FILE .APK BENERAN (install langsung, bukan lewat Chrome)
+====================================================================
+1. Pastikan sudah hosting & punya link HTTPS
+2. Buka pwabuilder.com, paste link hosting-nya, klik "Start"
+3. Pilih platform Android, klik "Generate Package"
+4. Download file .apk, pindahkan ke HP, install manual
+   (mungkin perlu izinkan "Install dari sumber tidak dikenal")
+
+====================================================================
+FITUR BARU: CETAK LANGSUNG KE PRINTER BLUETOOTH (TANPA RAWBT)
+====================================================================
+Di halaman Struk sekarang ada kotak "Cetak Langsung ke Printer
+Bluetooth". Pilih ukuran kertas (58mm/80mm) lalu tekan "Hubungkan &
+Cetak" -> pilih printer di daftar yang muncul -> struk langsung
+kecetak, tanpa perlu buka app lain.
+
+SYARAT biar ini jalan:
+1. Printer-nya harus jenis Bluetooth Low Energy (BLE). Banyak printer
+   struk mini yang dijual online itu Bluetooth "Classic", bukan BLE -
+   ini TIDAK akan terdeteksi (keterbatasan sistem Android, bukan bug).
+2. App harus dibuka lewat browser/APK yang mendukung "Web Bluetooth
+   API". Chrome browser biasa mendukung ini. APK hasil PWABuilder
+   (opsi di bawah) juga biasanya mendukung karena memakai mesin Chrome
+   asli. APK dari tool "webview" yang sederhana kadang TIDAK
+   mendukung.
+   -> Kalau tombol "Hubungkan & Cetak" muncul tulisan "Bluetooth
+      langsung ga kedeteksi", coba buka link app-nya langsung lewat
+      Chrome (bukan lewat APK) untuk cek printer-nya kedukung atau
+      tidak. Kalau di Chrome jalan tapi di APK tidak, berarti APK-nya
+      yang membatasi - opsi RawBT / Unduh Struk tetap tersedia sebagai
+      cadangan.
+
+====================================================================
+CATATAN PENTING
+====================================================================
+- Config Firebase yang ditanam di app ini boleh terlihat orang lain
+  (bukan rahasia, ini normal untuk semua app berbasis Firebase),
+  tapi keamanan datanya diatur lewat aturan Firestore + Google
+  Sign-In, BUKAN dengan menyembunyikan config ini.
+- PENTING: kalau waktu awal bikin Firestore Database kemarin pilih
+  mode "test mode", itu artinya siapa pun yang tau config-nya bisa
+  baca/tulis SEMUA data di database (bukan cuma punya sendiri), dan
+  mode test itu otomatis terkunci total (nolak semua akses) setelah
+  30 hari. Supaya lebih aman dan gak kadaluarsa, ganti aturannya:
+  buka console.firebase.google.com -> project "kasir-donat-genduy"
+  -> Build -> Firestore Database -> tab "Rules" -> ganti isinya jadi:
+
+    rules_version = '2';
+    service cloud.firestore {
+      match /databases/{database}/documents {
+        match /kasir-donat-genduy-users/{userId} {
+          allow read, write: if request.auth != null && request.auth.uid == userId;
+        }
+      }
+    }
+
+  lalu klik "Publish". Ini bikin tiap akun Google cuma bisa
+  baca/tulis datanya sendiri, dan gak akan expired.
+- Kalau mau reset semua data dari awal: tab Menu -> Reset Data
